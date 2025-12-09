@@ -1,0 +1,26 @@
+<dependencies>
+
+    <!--
+        MySQL JDBC Driver
+        - Ye Java ko MySQL database se connect karne deta hai
+        - Iske bina Connection, PreparedStatement, ResultSet work nahi karenge
+    -->
+    <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <version>8.0.33</version>
+    </dependency>
+
+    <!--
+        Servlet API
+        - HttpServlet, HttpServletRequest, HttpServletResponse, @WebServlet use karne ke liye
+        - Tomcat server runtime me servlet provide karta hai isliye scope = provided
+    -->
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>4.0.1</version>
+        <scope>provided</scope>
+    </dependency>
+
+</dependencies>
