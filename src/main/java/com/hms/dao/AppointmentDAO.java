@@ -13,9 +13,9 @@ public class AppointmentDAO {
     public boolean addAppointment(Appointment a) {
         boolean success = false;
 
-        String sql = "INSERT INTO appointments " +
-                "(patient_id, doctor_id, appointment_datetime, status, description, created_by_staff_id) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO appointments(patient_id, doctor_id, appointment_datetime, " +
+                "status, description) VALUES (?,?,?,?,?)";
+
 
         try {
             Connection con = DBConnection.getConnection();
@@ -25,8 +25,6 @@ public class AppointmentDAO {
             ps.setString(3, a.getAppointmentDatetime());
             ps.setString(4, a.getStatus());
             ps.setString(5, a.getDescription());
-            ps.setInt(6, 1); // abhi staff_id hardcode, baad me login se aayega
-
             success = ps.executeUpdate() > 0;
 
         } catch (Exception e) {
@@ -85,4 +83,31 @@ public class AppointmentDAO {
         }
         return count;
     }
+    public List<Appointment> getAllAppointments() {
+        List<Appointment> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM appointments ORDER BY appointment_datetime DESC";
+
+        try {
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Appointment a = new Appointment();
+                a.setAppointmentId(rs.getInt("appointment_id"));
+                a.setPatientId(rs.getInt("patient_id"));
+                a.setDoctorId(rs.getInt("doctor_id"));
+                a.setAppointmentDatetime(String.valueOf(rs.getTimestamp("appointment_datetime")));
+                a.setStatus(rs.getString("status"));
+                a.setDescription(rs.getString("description"));
+                list.add(a);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }
