@@ -1,4 +1,4 @@
-package com.hms;
+package main.java.com.hms;
 
 import com.hms.dao.UserDAO;
 import com.hms.model.User;
